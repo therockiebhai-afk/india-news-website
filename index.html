@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily News - India</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>📰 Daily News India</h1>
+  </header>
+  <main>
+    <div id="news-container">Loading news...</div>
+  </main>
+  <footer>
+    <p>Powered by Newsdata.io | © 2025 DailyNews India</p>
+  </footer>
+  <script>
+    async function fetchNews() {
+      const response = await fetch('/api/fetch');
+      const data = await response.json();
+      const container = document.getElementById('news-container');
+      container.innerHTML = '';
+      if (data.results && data.results.length > 0) {
+        data.results.forEach(article => {
+          const card = document.createElement('div');
+          card.className = 'news-card';
+          card.innerHTML = `
+            <h2><a href="${article.link}" target="_blank">${article.title}</a></h2>
+            <p>${article.description || ''}</p>
+          `;
+          container.appendChild(card);
+        });
+      } else {
+        container.innerHTML = '<p>No news available.</p>';
+      }
+    }
+    fetchNews();
+  </script>
+</body>
+</html>
