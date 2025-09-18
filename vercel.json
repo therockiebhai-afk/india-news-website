@@ -1,12 +1,11 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "api/fetch.py", "use": "@vercel/python" },
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "styles.css", "use": "@vercel/static" }
-  ],
+  "functions": {
+    "api/fetch.py": {
+      "runtime": "@vercel/python@0.5.1"
+    }
+  },
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/fetch.py" },
+    { "src": "/api/fetch", "dest": "api/fetch.py" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
